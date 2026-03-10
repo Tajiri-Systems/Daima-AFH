@@ -309,7 +309,7 @@ function ResidentCharts({ residents }) {
   const [checks, setChecks] = useState(
     Object.fromEntries(residents.map(r=>[r.id,CHART_CHECKLIST.map(c=>({...c,done:false}))]))
   );
-  useEffect(()=>{ if(!selected&&residents.length) setSelected(residents[0]); },[residents]);
+  useEffect(()=>{ if(!selected&&residents.length) setSelected(residents[0]); },[]);
   const toggle=(cid)=>{ setChecks(prev=>({...prev,[selected.id]:prev[selected.id].map(c=>c.id===cid?{...c,done:!c.done}:c)})); };
   if(!selected) return <div style={{color:"var(--muted)",padding:20}}>No residents loaded.</div>;
   const cur=checks[selected.id]||[];
