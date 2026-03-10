@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { sheetsRead, sheetsAppend, SHEETS_CONFIG } from "./sheetsConfig";
 
@@ -53,9 +54,9 @@ const STYLE = `
   td { padding:11px 16px; color:var(--text); }
   .badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; letter-spacing:.08em; font-weight:500; text-transform:uppercase; }
   .badge-green { background:rgba(34,211,165,.12); color:var(--green); border:1px solid rgba(34,211,165,.25); }
-  .badge-amber { background:rgba(246,166,35,.12);  color:var(--amber); border:1px solid rgba(246,166,35,.25); }
-  .badge-red   { background:rgba(255,77,106,.12);  color:var(--red);   border:1px solid rgba(255,77,106,.25); }
-  .badge-blue  { background:rgba(79,163,224,.12);  color:var(--blue);  border:1px solid rgba(79,163,224,.25); }
+  .badge-amber { background:rgba(246,166,35,.12); color:var(--amber); border:1px solid rgba(246,166,35,.25); }
+  .badge-red   { background:rgba(255,77,106,.12); color:var(--red);   border:1px solid rgba(255,77,106,.25); }
+  .badge-blue  { background:rgba(79,163,224,.12); color:var(--blue);  border:1px solid rgba(79,163,224,.25); }
   .progress-bar-bg { background:var(--border); border-radius:4px; height:6px; overflow:hidden; width:100%; }
   .progress-bar-fill { height:100%; border-radius:4px; transition:width .6s ease; }
   .checklist { display:flex; flex-direction:column; gap:2px; }
@@ -77,10 +78,10 @@ const STYLE = `
   .btn-ghost { background:transparent; color:var(--muted); border:1px solid var(--border); }
   .btn-ghost:hover { color:var(--text); border-color:var(--text); }
   .alert-banner { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:6px; margin-bottom:12px; font-size:12px; }
-  .alert-banner.red   { background:rgba(255,77,106,.1);  border:1px solid rgba(255,77,106,.3);  color:#ff8fa3; }
-  .alert-banner.amber { background:rgba(246,166,35,.1);  border:1px solid rgba(246,166,35,.3);  color:#f6c95a; }
-  .alert-banner.green { background:rgba(34,211,165,.1);  border:1px solid rgba(34,211,165,.3);  color:var(--green); }
-  .alert-banner.blue  { background:rgba(79,163,224,.1);  border:1px solid rgba(79,163,224,.3);  color:var(--blue); }
+  .alert-banner.red   { background:rgba(255,77,106,.1); border:1px solid rgba(255,77,106,.3); color:#ff8fa3; }
+  .alert-banner.amber { background:rgba(246,166,35,.1); border:1px solid rgba(246,166,35,.3); color:#f6c95a; }
+  .alert-banner.green { background:rgba(34,211,165,.1); border:1px solid rgba(34,211,165,.3); color:var(--green); }
+  .alert-banner.blue  { background:rgba(79,163,224,.1); border:1px solid rgba(79,163,224,.3); color:var(--blue); }
   .wac-card { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:16px; margin-bottom:10px; transition:border-color .2s; }
   .wac-card:hover { border-color:var(--blue); }
   .wac-code { font-size:11px; color:var(--blue); letter-spacing:.1em; margin-bottom:4px; }
@@ -105,9 +106,9 @@ const STYLE = `
 const DEFAULT_RESIDENTS = [
   { id:"R-001", name:"Margaret T.", room:"101", admission:"2024-03-12", level:"Level 3", physician:"Dr. Okonkwo", chartComplete:87, flags:"Med review due" },
   { id:"R-002", name:"Robert H.",   room:"102", admission:"2023-11-05", level:"Level 2", physician:"Dr. Patel",   chartComplete:100, flags:"" },
-  { id:"R-003", name:"Dorothy W.",  room:"103", admission:"2024-06-22", level:"Level 4", physician:"Dr. Nguyen",  chartComplete:72, flags:"Care plan update,TB test due" },
-  { id:"R-004", name:"James B.",    room:"104", admission:"2022-08-14", level:"Level 3", physician:"Dr. Okonkwo", chartComplete:95, flags:"Annual physical due" },
-  { id:"R-005", name:"Helen C.",    room:"105", admission:"2024-09-01", level:"Level 2", physician:"Dr. Kim",     chartComplete:58, flags:"Admission docs missing,Financial disclosure" },
+  { id:"R-003", name:"Dorothy W.",  room:"103", admission:"2024-06-22", level:"Level 4", physician:"Dr. Nguyen",  chartComplete:72,  flags:"Care plan update,TB test due" },
+  { id:"R-004", name:"James B.",    room:"104", admission:"2022-08-14", level:"Level 3", physician:"Dr. Okonkwo", chartComplete:95,  flags:"Annual physical due" },
+  { id:"R-005", name:"Helen C.",    room:"105", admission:"2024-09-01", level:"Level 2", physician:"Dr. Kim",     chartComplete:58,  flags:"Admission docs missing,Financial disclosure" },
 ];
 const DEFAULT_STAFF = [
   { id:"S-001", name:"Amara N.",  role:"Caregiver",      hired:"2022-05-10", cpr:"2025-08-01", hca:"2026-01-15", food:"2026-03-01", dementia:"2027-01-10" },
@@ -136,86 +137,85 @@ const CHART_CHECKLIST = [
   { id:"c12", text:"Financial agreement documented",     wac:"WAC 388-76-10200" },
 ];
 const INSPECTION_ITEMS = [
-  { category:"Personnel Files", item:"All staff credentials verified",          status:"pass" },
-  { category:"Personnel Files", item:"Background check records on file",        status:"pass" },
-  { category:"Personnel Files", item:"HCA training certificates current",       status:"warn" },
-  { category:"Resident Care",   item:"ISPs current for all residents",          status:"warn" },
-  { category:"Resident Care",   item:"Medication management logs complete",     status:"pass" },
-  { category:"Resident Care",   item:"Dignity & rights policies posted",        status:"pass" },
-  { category:"Home Safety",     item:"Fire drill log (2x per year)",            status:"pass" },
-  { category:"Home Safety",     item:"Carbon monoxide detectors tested",        status:"pass" },
-  { category:"Home Safety",     item:"Emergency evacuation plan posted",        status:"fail" },
-  { category:"Home Safety",     item:"First aid kit stocked & accessible",      status:"pass" },
-  { category:"Medications",     item:"Controlled substance log verified",       status:"pass" },
-  { category:"Medications",     item:"Medications stored securely (locked)",    status:"pass" },
-  { category:"Medications",     item:"MAR documentation complete",              status:"warn" },
-  { category:"Food Service",    item:"Food handler cards on file",              status:"warn" },
-  { category:"Food Service",    item:"Fridge/freezer temps logged",             status:"fail" },
-  { category:"Documentation",   item:"Incident reports filed within 24h",      status:"pass" },
-  { category:"Documentation",   item:"Activity log maintained",                status:"pass" },
-  { category:"Documentation",   item:"Resident grievance procedure posted",    status:"pass" },
+  { category:"Personnel Files", item:"All staff credentials verified",       status:"pass" },
+  { category:"Personnel Files", item:"Background check records on file",     status:"pass" },
+  { category:"Personnel Files", item:"HCA training certificates current",    status:"warn" },
+  { category:"Resident Care",   item:"ISPs current for all residents",       status:"warn" },
+  { category:"Resident Care",   item:"Medication management logs complete",  status:"pass" },
+  { category:"Resident Care",   item:"Dignity & rights policies posted",     status:"pass" },
+  { category:"Home Safety",     item:"Fire drill log (2x per year)",         status:"pass" },
+  { category:"Home Safety",     item:"Carbon monoxide detectors tested",     status:"pass" },
+  { category:"Home Safety",     item:"Emergency evacuation plan posted",     status:"fail" },
+  { category:"Home Safety",     item:"First aid kit stocked & accessible",   status:"pass" },
+  { category:"Medications",     item:"Controlled substance log verified",    status:"pass" },
+  { category:"Medications",     item:"Medications stored securely (locked)", status:"pass" },
+  { category:"Medications",     item:"MAR documentation complete",           status:"warn" },
+  { category:"Food Service",    item:"Food handler cards on file",           status:"warn" },
+  { category:"Food Service",    item:"Fridge/freezer temps logged",          status:"fail" },
+  { category:"Documentation",   item:"Incident reports filed within 24h",   status:"pass" },
+  { category:"Documentation",   item:"Activity log maintained",              status:"pass" },
+  { category:"Documentation",   item:"Resident grievance procedure posted",  status:"pass" },
 ];
 const WAC_REFS = [
   { code:"WAC 388-76-10100", title:"Licensing Requirements",        desc:"AFH must be licensed by DSHS before providing care. License must be posted prominently.", status:"compliant" },
   { code:"WAC 388-76-10155", title:"Provider Qualifications",       desc:"Provider must complete 75-hour basic training, CPR/First Aid, food handler cert, and dementia training.", status:"compliant" },
   { code:"WAC 388-76-10160", title:"Employee Requirements",         desc:"All caregivers must meet background check, TB screening, HCA registration, and training requirements.", status:"warning" },
-  { code:"WAC 388-76-10200", title:"Admission Agreement",           desc:"Written admission agreement required prior to or on day of admission, including rates, services, discharge conditions.", status:"compliant" },
-  { code:"WAC 388-76-10300", title:"Individual Service Plan (ISP)", desc:"ISP must be developed within 30 days of admission and reviewed/updated at least annually or upon significant change.", status:"warning" },
-  { code:"WAC 388-76-10310", title:"Health Monitoring",             desc:"Provider must monitor, document, and respond to residents' health conditions and communicate with healthcare providers.", status:"compliant" },
-  { code:"WAC 388-76-10315", title:"Medication Management",         desc:"Medications must be stored securely, administered per physician orders, and documented on a MAR.", status:"compliant" },
-  { code:"WAC 388-76-10400", title:"Physical Environment",          desc:"Home must meet safety, sanitation, fire protection, and space standards including egress, temperature, lighting.", status:"warning" },
-  { code:"WAC 388-76-10520", title:"Incident Reporting",            desc:"Reportable incidents must be reported to DSHS within 24 hours. Internal documentation required for all incidents.", status:"compliant" },
-  { code:"WAC 388-76-10205", title:"Resident Rights",               desc:"Provider must ensure residents' rights are protected including privacy, dignity, grievance process, and freedom from abuse.", status:"compliant" },
+  { code:"WAC 388-76-10200", title:"Admission Agreement",           desc:"Written admission agreement required prior to or on day of admission.", status:"compliant" },
+  { code:"WAC 388-76-10300", title:"Individual Service Plan (ISP)", desc:"ISP must be developed within 30 days of admission and reviewed annually.", status:"warning" },
+  { code:"WAC 388-76-10310", title:"Health Monitoring",             desc:"Provider must monitor and document residents health conditions.", status:"compliant" },
+  { code:"WAC 388-76-10315", title:"Medication Management",         desc:"Medications must be stored securely and documented on a MAR.", status:"compliant" },
+  { code:"WAC 388-76-10400", title:"Physical Environment",          desc:"Home must meet safety, sanitation, and fire protection standards.", status:"warning" },
+  { code:"WAC 388-76-10520", title:"Incident Reporting",            desc:"Reportable incidents must be reported to DSHS within 24 hours.", status:"compliant" },
+  { code:"WAC 388-76-10205", title:"Resident Rights",               desc:"Provider must ensure residents rights including privacy, dignity, and grievance process.", status:"compliant" },
 ];
 
 function daysUntil(d) { return Math.ceil((new Date(d) - new Date()) / 86400000); }
-function certStatus(d) { const n = daysUntil(d); return n < 0 ? "expired" : n < 60 ? "expiring" : "current"; }
+function certStatus(d) { const n=daysUntil(d); return n<0?"expired":n<60?"expiring":"current"; }
 function certBadge(d) {
-  const s = certStatus(d);
-  return s === "expired"  ? <span className="badge badge-red">Expired</span>
-       : s === "expiring" ? <span className="badge badge-amber">Exp Soon</span>
+  const s=certStatus(d);
+  return s==="expired" ? <span className="badge badge-red">Expired</span>
+       : s==="expiring"? <span className="badge badge-amber">Exp Soon</span>
        : <span className="badge badge-green">Current</span>;
 }
-function pColor(p) { return p >= 90 ? "#22d3a5" : p >= 70 ? "#f6a623" : "#ff4d6a"; }
+function pColor(p) { return p>=90?"#22d3a5":p>=70?"#f6a623":"#ff4d6a"; }
 
-function SyncBar({ live }) {
+function SyncBar({live}) {
   return (
     <div className="sync-bar">
-      <div className={`sync-dot ${live ? "live" : "local"}`} />
-      {live ? <span>Live — syncing with Google Sheets</span>
-            : <span>Local mode — connect Google Sheets to persist data across sessions</span>}
+      <div className={`sync-dot ${live?"live":"local"}`}/>
+      {live?<span>Live — syncing with Google Sheets</span>:<span>Local mode — connect Google Sheets to persist data</span>}
     </div>
   );
 }
 
-function Dashboard({ residents, incidents, staff }) {
-  const passCount = INSPECTION_ITEMS.filter(i => i.status === "pass").length;
-  const failCount = INSPECTION_ITEMS.filter(i => i.status === "fail").length;
-  const warnCount = INSPECTION_ITEMS.filter(i => i.status === "warn").length;
-  const score = Math.round((passCount / INSPECTION_ITEMS.length) * 100);
-  const expiredStaff  = staff.filter(s => certStatus(s.cpr) === "expired" || certStatus(s.hca) === "expired").length;
-  const expiringStaff = staff.filter(s => certStatus(s.cpr) === "expiring" || certStatus(s.hca) === "expiring").length;
-  const avgChart = residents.length ? Math.round(residents.reduce((a,r) => a + Number(r.chartComplete), 0) / residents.length) : 0;
+function Dashboard({residents,incidents,staff}) {
+  const pass=INSPECTION_ITEMS.filter(i=>i.status==="pass").length;
+  const fail=INSPECTION_ITEMS.filter(i=>i.status==="fail").length;
+  const warn=INSPECTION_ITEMS.filter(i=>i.status==="warn").length;
+  const score=Math.round((pass/INSPECTION_ITEMS.length)*100);
+  const expd=staff.filter(s=>certStatus(s.cpr)==="expired"||certStatus(s.hca)==="expired").length;
+  const expg=staff.filter(s=>certStatus(s.cpr)==="expiring"||certStatus(s.hca)==="expiring").length;
+  const avg=residents.length?Math.round(residents.reduce((a,r)=>a+Number(r.chartComplete),0)/residents.length):0;
   return (
     <div>
-      {failCount > 0 && <div className="alert-banner red">🚨 <span><strong>{failCount} critical item{failCount>1?"s":""}</strong> require immediate attention before next inspection.</span></div>}
-      {expiredStaff > 0 && <div className="alert-banner red">⛔ <span><strong>{expiredStaff} staff member{expiredStaff>1?"s":""}</strong> have expired certifications.</span></div>}
-      {expiringStaff > 0 && <div className="alert-banner amber">⚠️ <span><strong>{expiringStaff} staff member{expiringStaff>1?"s":""}</strong> have certifications expiring within 60 days.</span></div>}
+      {fail>0&&<div className="alert-banner red">🚨 <span><strong>{fail} critical item{fail>1?"s":""}</strong> require immediate attention.</span></div>}
+      {expd>0&&<div className="alert-banner red">⛔ <span><strong>{expd} staff member{expd>1?"s":""}</strong> have expired certifications.</span></div>}
+      {expg>0&&<div className="alert-banner amber">⚠️ <span><strong>{expg} staff member{expg>1?"s":""}</strong> expiring within 60 days.</span></div>}
       <div className="section-title">Command Overview</div>
       <div className="metrics-grid">
         <div className={`metric-card ${score>=90?"green":score>=75?"amber":"red"}`}>
           <div className="metric-label">Inspection Score</div>
           <div className="metric-value">{score}%</div>
-          <div className="metric-sub">{passCount}/{INSPECTION_ITEMS.length} passing</div>
+          <div className="metric-sub">{pass}/{INSPECTION_ITEMS.length} passing</div>
         </div>
         <div className="metric-card red">
           <div className="metric-label">Critical Fails</div>
-          <div className="metric-value">{failCount}</div>
+          <div className="metric-value">{fail}</div>
           <div className="metric-sub">Immediate action needed</div>
         </div>
         <div className="metric-card amber">
           <div className="metric-label">Warnings</div>
-          <div className="metric-value">{warnCount}</div>
+          <div className="metric-value">{warn}</div>
           <div className="metric-sub">Needs attention</div>
         </div>
         <div className="metric-card blue">
@@ -223,36 +223,36 @@ function Dashboard({ residents, incidents, staff }) {
           <div className="metric-value">{residents.length}</div>
           <div className="metric-sub">Active / Max 6</div>
         </div>
-        <div className={`metric-card ${avgChart>=90?"green":"amber"}`}>
+        <div className={`metric-card ${avg>=90?"green":"amber"}`}>
           <div className="metric-label">Avg Chart Score</div>
-          <div className="metric-value">{avgChart}%</div>
+          <div className="metric-value">{avg}%</div>
           <div className="metric-sub">Documentation</div>
         </div>
-        <div className={`metric-card ${expiredStaff>0?"red":expiringStaff>0?"amber":"green"}`}>
+        <div className={`metric-card ${expd>0?"red":expg>0?"amber":"green"}`}>
           <div className="metric-label">Staff Credentials</div>
-          <div className="metric-value">{staff.length-expiredStaff-expiringStaff}/{staff.length}</div>
+          <div className="metric-value">{staff.length-expd-expg}/{staff.length}</div>
           <div className="metric-sub">Fully current</div>
         </div>
       </div>
       <div className="two-col">
         <div>
           <div className="section-title">Readiness by Category</div>
-          {[...new Set(INSPECTION_ITEMS.map(i=>i.category))].map(cat => {
-            const items = INSPECTION_ITEMS.filter(i=>i.category===cat);
-            const p = Math.round((items.filter(i=>i.status==="pass").length/items.length)*100);
+          {[...new Set(INSPECTION_ITEMS.map(i=>i.category))].map(cat=>{
+            const items=INSPECTION_ITEMS.filter(i=>i.category===cat);
+            const p=Math.round((items.filter(i=>i.status==="pass").length/items.length)*100);
             return (
               <div key={cat} style={{marginBottom:14}}>
                 <div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:5}}>
                   <span>{cat}</span><span style={{color:pColor(p)}}>{p}%</span>
                 </div>
-                <div className="progress-bar-bg"><div className="progress-bar-fill" style={{width:p+"%",background:pColor(p)}} /></div>
+                <div className="progress-bar-bg"><div className="progress-bar-fill" style={{width:p+"%",background:pColor(p)}}/></div>
               </div>
             );
           })}
         </div>
         <div>
           <div className="section-title">Recent Incidents</div>
-          {incidents.slice(0,3).map(inc => (
+          {incidents.slice(0,3).map(inc=>(
             <div key={inc.id} className="incident-card" style={{marginBottom:8}}>
               <div className="incident-header">
                 <div><div className="incident-id">{inc.id}</div><div className="incident-type">{inc.type}</div></div>
@@ -270,9 +270,9 @@ function Dashboard({ residents, incidents, staff }) {
 }
 
 function InspectionDashboard() {
-  const [filter, setFilter] = useState("all");
-  const filtered = filter==="all"?INSPECTION_ITEMS:INSPECTION_ITEMS.filter(i=>i.status===filter);
-  const categories = [...new Set(INSPECTION_ITEMS.map(i=>i.category))];
+  const [filter,setFilter]=useState("all");
+  const filtered=filter==="all"?INSPECTION_ITEMS:INSPECTION_ITEMS.filter(i=>i.status===filter);
+  const categories=[...new Set(INSPECTION_ITEMS.map(i=>i.category))];
   return (
     <div>
       <div className="section-title">Inspection Readiness Dashboard</div>
@@ -304,13 +304,16 @@ function InspectionDashboard() {
   );
 }
 
-function ResidentCharts({ residents }) {
-  const [selected, setSelected] = useState(residents[0]);
-  const [checks, setChecks] = useState(
-    Object.fromEntries(residents.map(r=>[r.id,CHART_CHECKLIST.map(c=>({...c,done:false}))]))
-  );
-  useEffect(()=>{ if(!selected&&residents.length) setSelected(residents[0]); },[]);
-  const toggle=(cid)=>{ setChecks(prev=>({...prev,[selected.id]:prev[selected.id].map(c=>c.id===cid?{...c,done:!c.done}:c)})); };
+function ResidentCharts({residents}) {
+  const [selected,setSelected]=useState(null);
+  const [checks,setChecks]=useState({});
+  useEffect(()=>{
+    if(residents.length){
+      setSelected(residents[0]);
+      setChecks(Object.fromEntries(residents.map(r=>[r.id,CHART_CHECKLIST.map(c=>({...c,done:false}))])));
+    }
+  },[]);
+  const toggle=(cid)=>setChecks(prev=>({...prev,[selected.id]:prev[selected.id].map(c=>c.id===cid?{...c,done:!c.done}:c)}));
   if(!selected) return <div style={{color:"var(--muted)",padding:20}}>No residents loaded.</div>;
   const cur=checks[selected.id]||[];
   const pct=cur.length?Math.round((cur.filter(c=>c.done).length/cur.length)*100):0;
@@ -331,7 +334,7 @@ function ResidentCharts({ residents }) {
                 </div>
                 <span style={{fontSize:14,fontWeight:800,color:pColor(p),fontFamily:"Syne,sans-serif"}}>{p}%</span>
               </div>
-              <div className="progress-bar-bg"><div className="progress-bar-fill" style={{width:p+"%",background:pColor(p)}} /></div>
+              <div className="progress-bar-bg"><div className="progress-bar-fill" style={{width:p+"%",background:pColor(p)}}/></div>
               {flags.length>0&&<div style={{marginTop:8,display:"flex",gap:4,flexWrap:"wrap"}}>{flags.map(f=><span key={f} className="badge badge-amber">{f}</span>)}</div>}
             </div>
           );
@@ -344,12 +347,12 @@ function ResidentCharts({ residents }) {
             <span style={{color:"var(--muted)"}}>Completeness</span>
             <span style={{color:pColor(pct),fontWeight:700}}>{cur.filter(c=>c.done).length}/{cur.length} — {pct}%</span>
           </div>
-          <div className="progress-bar-bg" style={{height:8}}><div className="progress-bar-fill" style={{width:pct+"%",background:pColor(pct)}} /></div>
+          <div className="progress-bar-bg" style={{height:8}}><div className="progress-bar-fill" style={{width:pct+"%",background:pColor(pct)}}/></div>
         </div>
         <div className="checklist">
           {cur.map(c=>(
             <div key={c.id} className="check-item" onClick={()=>toggle(c.id)}>
-              <div className={`check-box ${c.done?"checked":""}`} />
+              <div className={`check-box ${c.done?"checked":""}`}/>
               <div style={{flex:1}}>
                 <div style={{fontSize:12,textDecoration:c.done?"line-through":"none",color:c.done?"var(--muted)":"var(--text)"}}>{c.text}</div>
                 <div className="check-wac">{c.wac}</div>
@@ -362,18 +365,10 @@ function ResidentCharts({ residents }) {
   );
 }
 
-function TrainingTracker({ staff }) {
-  const cols = [
-    {key:"cpr",label:"CPR / First Aid"},
-    {key:"hca",label:"HCA Registration"},
-    {key:"food",label:"Food Handler"},
-    {key:"dementia",label:"Dementia Training"},
-  ];
+function TrainingTracker({staff}) {
+  const cols=[{key:"cpr",label:"CPR / First Aid"},{key:"hca",label:"HCA Registration"},{key:"food",label:"Food Handler"},{key:"dementia",label:"Dementia Training"}];
   const alerts=[];
-  staff.forEach(s=>cols.forEach(c=>{
-    const d=daysUntil(s[c.key]);
-    if(d<60) alerts.push({staff:s.name,cert:c.label,days:d,date:s[c.key]});
-  }));
+  staff.forEach(s=>cols.forEach(c=>{const d=daysUntil(s[c.key]);if(d<60)alerts.push({staff:s.name,cert:c.label,days:d,date:s[c.key]});}));
   alerts.sort((a,b)=>a.days-b.days);
   return (
     <div>
@@ -389,14 +384,14 @@ function TrainingTracker({ staff }) {
         <table>
           <thead><tr><th>Name</th><th>Role</th>{cols.map(c=><th key={c.key}>{c.label}</th>)}<th>Status</th></tr></thead>
           <tbody>{staff.map(s=>{
-            const statuses=cols.map(c=>certStatus(s[c.key]));
-            const overall=statuses.includes("expired")?"expired":statuses.includes("expiring")?"expiring":"current";
+            const sts=cols.map(c=>certStatus(s[c.key]));
+            const ov=sts.includes("expired")?"expired":sts.includes("expiring")?"expiring":"current";
             return (
               <tr key={s.id}>
                 <td style={{fontWeight:500,color:"var(--heading)"}}>{s.name}</td>
                 <td style={{fontSize:11,color:"var(--muted)"}}>{s.role}</td>
                 {cols.map(c=><td key={c.key}><div>{certBadge(s[c.key])}</div><div style={{fontSize:9,color:"var(--muted)",marginTop:2}}>{s[c.key]}</div></td>)}
-                <td>{overall==="expired"?<span className="badge badge-red">⛔ Action Required</span>:overall==="expiring"?<span className="badge badge-amber">⚠ Renew Soon</span>:<span className="badge badge-green">✓ Current</span>}</td>
+                <td>{ov==="expired"?<span className="badge badge-red">⛔ Action Required</span>:ov==="expiring"?<span className="badge badge-amber">⚠ Renew Soon</span>:<span className="badge badge-green">✓ Current</span>}</td>
               </tr>
             );
           })}</tbody>
@@ -406,11 +401,11 @@ function TrainingTracker({ staff }) {
   );
 }
 
-function IncidentReporting({ incidents, setIncidents, residents, sheetsLive }) {
-  const [form, setForm] = useState({type:"",resident:"",date:"",severity:"minor",desc:"",dshs:"No"});
-  const [saved, setSaved] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const submit = async () => {
+function IncidentReporting({incidents,setIncidents,residents,sheetsLive}) {
+  const [form,setForm]=useState({type:"",resident:"",date:"",severity:"minor",desc:"",dshs:"No"});
+  const [saved,setSaved]=useState(false);
+  const [saving,setSaving]=useState(false);
+  const submit=async()=>{
     if(!form.type||!form.resident||!form.date) return;
     setSaving(true);
     const id=`INC-${new Date().getFullYear()}-${String(incidents.length+1).padStart(3,"0")}`;
@@ -418,7 +413,7 @@ function IncidentReporting({ incidents, setIncidents, residents, sheetsLive }) {
     setIncidents(prev=>[row,...prev]);
     if(sheetsLive) await sheetsAppend(SHEETS_CONFIG.TABS.INCIDENTS,row);
     setForm({type:"",resident:"",date:"",severity:"minor",desc:"",dshs:"No"});
-    setSaving(false); setSaved(true);
+    setSaving(false);setSaved(true);
     setTimeout(()=>setSaved(false),3000);
   };
   return (
@@ -441,7 +436,7 @@ function IncidentReporting({ incidents, setIncidents, residents, sheetsLive }) {
                 {residents.map(r=><option key={r.id} value={r.name}>{r.name}</option>)}
               </select>
             </div>
-            <div><div className="field-label">Date</div><input type="date" value={form.date} onChange={e=>setForm({...form,date:e.target.value})} /></div>
+            <div><div className="field-label">Date</div><input type="date" value={form.date} onChange={e=>setForm({...form,date:e.target.value})}/></div>
             <div><div className="field-label">Severity</div>
               <select value={form.severity} onChange={e=>setForm({...form,severity:e.target.value})}>
                 {["minor","moderate","serious","critical"].map(s=><option key={s}>{s}</option>)}
@@ -450,14 +445,14 @@ function IncidentReporting({ incidents, setIncidents, residents, sheetsLive }) {
           </div>
           <div style={{padding:"0 16px 12px"}}>
             <div className="field-label">Description & Actions Taken</div>
-            <textarea value={form.desc} onChange={e=>setForm({...form,desc:e.target.value})} placeholder="What happened, immediate response, corrective actions..." />
+            <textarea value={form.desc} onChange={e=>setForm({...form,desc:e.target.value})} placeholder="What happened, immediate response, corrective actions..."/>
           </div>
           <div style={{padding:"0 16px 12px",display:"flex",alignItems:"center",gap:12}}>
             <div className="field-label" style={{marginBottom:0}}>Reported to DSHS?</div>
             <select value={form.dshs} onChange={e=>setForm({...form,dshs:e.target.value})} style={{width:"auto"}}>
               <option>No</option><option>Yes</option>
             </select>
-            <div style={{flex:1}} />
+            <div style={{flex:1}}/>
             <button className="btn btn-primary" onClick={submit} disabled={saving}>{saving?"Saving...":"Log Incident"}</button>
           </div>
           <div style={{padding:"0 16px 14px"}}>
@@ -489,7 +484,7 @@ function IncidentReporting({ incidents, setIncidents, residents, sheetsLive }) {
 }
 
 function WACReference() {
-  const [search, setSearch] = useState("");
+  const [search,setSearch]=useState("");
   const filtered=WAC_REFS.filter(w=>w.code.toLowerCase().includes(search.toLowerCase())||w.title.toLowerCase().includes(search.toLowerCase())||w.desc.toLowerCase().includes(search.toLowerCase()));
   return (
     <div>
@@ -499,7 +494,7 @@ function WACReference() {
         <div className="metric-card amber"><div className="metric-label">Needs Review</div><div className="metric-value">{WAC_REFS.filter(w=>w.status==="warning").length}</div></div>
         <div className="metric-card blue"><div className="metric-label">Total Sections</div><div className="metric-value">{WAC_REFS.length}</div></div>
       </div>
-      <div style={{marginBottom:16}}><input placeholder="Search WAC code, title, or keyword..." value={search} onChange={e=>setSearch(e.target.value)} /></div>
+      <div style={{marginBottom:16}}><input placeholder="Search WAC code, title, or keyword..." value={search} onChange={e=>setSearch(e.target.value)}/></div>
       {filtered.map(w=>(
         <div key={w.code} className="wac-card">
           <div className="wac-code">{w.code}</div>
@@ -518,12 +513,12 @@ function SetupGuide() {
       <div className="section-title">Google Sheets Setup Guide</div>
       <div className="alert-banner blue">📋 Follow these steps once to connect your live Google Sheets backend.</div>
       {[
-        {step:"1",title:"Create your Google Spreadsheet",desc:'Go to sheets.google.com → New spreadsheet. Name it "Daima AFH Command Center". Create 4 tabs: Residents, Staff, Incidents, Checklist.'},
-        {step:"2",title:"Open Google Apps Script",desc:"In your spreadsheet: Extensions → Apps Script. Delete any default code."},
-        {step:"3",title:"Paste the backend script",desc:"Copy the contents of APPS_SCRIPT.gs and paste into the Apps Script editor. Replace PASTE_YOUR_SPREADSHEET_ID_HERE with your actual spreadsheet ID."},
-        {step:"4",title:"Deploy as Web App",desc:"Click Deploy → New Deployment. Type: Web app. Execute as: Me. Who has access: Anyone. Click Deploy. Copy the Web App URL."},
-        {step:"5",title:"Add environment variables",desc:"In Vercel: project → Settings → Environment Variables. Add REACT_APP_SHEET_API_URL and REACT_APP_SPREADSHEET_ID. Redeploy."},
-        {step:"6",title:"You're live!",desc:"Refresh the app. The sync indicator turns green. All data now saves permanently to your Google Sheet."},
+        {step:"1",title:"Create your Google Spreadsheet",desc:'Go to sheets.google.com and create a new spreadsheet named "Daima AFH Command Center". Create 4 tabs: Residents, Staff, Incidents, Checklist.'},
+        {step:"2",title:"Open Google Apps Script",desc:"In your spreadsheet go to Extensions then Apps Script. Delete any default code."},
+        {step:"3",title:"Paste the backend script",desc:"Copy the contents of APPS_SCRIPT.gs from your download and paste into the Apps Script editor. Replace PASTE_YOUR_SPREADSHEET_ID_HERE with your actual ID."},
+        {step:"4",title:"Deploy as Web App",desc:"Click Deploy then New Deployment. Select Web app. Execute as Me. Who has access Anyone. Click Deploy and copy the Web App URL."},
+        {step:"5",title:"Add environment variables in Vercel",desc:"Go to your Vercel project Settings then Environment Variables. Add REACT_APP_SHEET_API_URL and REACT_APP_SPREADSHEET_ID. Then redeploy."},
+        {step:"6",title:"You are live!",desc:"Refresh the app. The sync indicator in the top bar turns green. All incidents and data now save permanently to your Google Sheet."},
       ].map(s=>(
         <div key={s.step} style={{display:"flex",gap:16,marginBottom:16}}>
           <div style={{width:32,height:32,borderRadius:"50%",background:"var(--amber)",color:"#07090f",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"Syne,sans-serif",fontWeight:800,fontSize:14,flexShrink:0}}>{s.step}</div>
@@ -537,7 +532,7 @@ function SetupGuide() {
   );
 }
 
-const TABS = [
+const TABS=[
   {id:"dashboard",  label:"📊 Command Center"},
   {id:"inspection", label:"📋 Inspection"},
   {id:"charts",     label:"🗂 Resident Charts"},
@@ -548,30 +543,30 @@ const TABS = [
 ];
 
 export default function App() {
-  const [tab, setTab] = useState("dashboard");
-  const [residents, setResidents] = useState(DEFAULT_RESIDENTS);
-  const [staff, setStaff] = useState(DEFAULT_STAFF);
-  const [incidents, setIncidents] = useState(DEFAULT_INCIDENTS);
-  const [sheetsLive, setSheetsLive] = useState(false);
+  const [tab,setTab]=useState("dashboard");
+  const [residents,setResidents]=useState(DEFAULT_RESIDENTS);
+  const [staff,setStaff]=useState(DEFAULT_STAFF);
+  const [incidents,setIncidents]=useState(DEFAULT_INCIDENTS);
+  const [sheetsLive,setSheetsLive]=useState(false);
 
-  useEffect(() => {
-    async function loadSheets() {
-      if (!SHEETS_CONFIG.SHEET_API_URL) return;
-      const [r, s, inc] = await Promise.all([
+  useEffect(()=>{
+    async function load() {
+      if(!SHEETS_CONFIG.SHEET_API_URL) return;
+      const [r,s,inc]=await Promise.all([
         sheetsRead(SHEETS_CONFIG.TABS.RESIDENTS),
         sheetsRead(SHEETS_CONFIG.TABS.STAFF),
         sheetsRead(SHEETS_CONFIG.TABS.INCIDENTS),
       ]);
-      if (r && r.length)    { setResidents(r);  setSheetsLive(true); }
-      if (s && s.length)    { setStaff(s);       setSheetsLive(true); }
-      if (inc && inc.length){ setIncidents(inc); setSheetsLive(true); }
+      if(r&&r.length){setResidents(r);setSheetsLive(true);}
+      if(s&&s.length){setStaff(s);setSheetsLive(true);}
+      if(inc&&inc.length){setIncidents(inc);setSheetsLive(true);}
     }
-    loadSheets();
-  }, []);
+    load();
+  },[]);
 
-  const failCount = INSPECTION_ITEMS.filter(i=>i.status==="fail").length;
-  const warnCount = INSPECTION_ITEMS.filter(i=>i.status==="warn").length;
-  const score = Math.round((INSPECTION_ITEMS.filter(i=>i.status==="pass").length/INSPECTION_ITEMS.length)*100);
+  const fail=INSPECTION_ITEMS.filter(i=>i.status==="fail").length;
+  const warn=INSPECTION_ITEMS.filter(i=>i.status==="warn").length;
+  const score=Math.round((INSPECTION_ITEMS.filter(i=>i.status==="pass").length/INSPECTION_ITEMS.length)*100);
 
   return (
     <>
@@ -579,7 +574,7 @@ export default function App() {
       <div className="app">
         <div className="topbar">
           <div className="topbar-brand">
-            <div className="brand-dot" />
+            <div className="brand-dot"/>
             <div>
               <div className="brand-name">Daima AFH — Command Center</div>
               <div className="brand-sub">DSHS / WAC 388-76 Compliance System</div>
@@ -587,8 +582,8 @@ export default function App() {
           </div>
           <div className="topbar-status">
             <span className={`status-pill ${score>=90?"green":score>=75?"amber":"red"}`}>Score {score}%</span>
-            {failCount>0&&<span className="status-pill red">{failCount} Critical</span>}
-            {warnCount>0&&<span className="status-pill amber">{warnCount} Warnings</span>}
+            {fail>0&&<span className="status-pill red">{fail} Critical</span>}
+            {warn>0&&<span className="status-pill amber">{warn} Warnings</span>}
             <span className={`status-pill ${sheetsLive?"green":"amber"}`}>{sheetsLive?"● Sheets Live":"● Local Mode"}</span>
           </div>
         </div>
@@ -598,14 +593,14 @@ export default function App() {
           ))}
         </div>
         <div className="main">
-          <SyncBar live={sheetsLive} />
-          {tab==="dashboard"  && <Dashboard residents={residents} incidents={incidents} staff={staff} />}
-          {tab==="inspection" && <InspectionDashboard />}
-          {tab==="charts"     && <ResidentCharts residents={residents} />}
-          {tab==="training"   && <TrainingTracker staff={staff} />}
-          {tab==="incidents"  && <IncidentReporting incidents={incidents} setIncidents={setIncidents} residents={residents} sheetsLive={sheetsLive} />}
-          {tab==="wac"        && <WACReference />}
-          {tab==="setup"      && <SetupGuide />}
+          <SyncBar live={sheetsLive}/>
+          {tab==="dashboard"  &&<Dashboard residents={residents} incidents={incidents} staff={staff}/>}
+          {tab==="inspection" &&<InspectionDashboard/>}
+          {tab==="charts"     &&<ResidentCharts residents={residents}/>}
+          {tab==="training"   &&<TrainingTracker staff={staff}/>}
+          {tab==="incidents"  &&<IncidentReporting incidents={incidents} setIncidents={setIncidents} residents={residents} sheetsLive={sheetsLive}/>}
+          {tab==="wac"        &&<WACReference/>}
+          {tab==="setup"      &&<SetupGuide/>}
         </div>
       </div>
     </>
